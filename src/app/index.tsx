@@ -15,7 +15,7 @@ export default function Index() {
   return (
     <ScrollView
       style={{ flex: 1 }}
-      className="bg-slate-200"
+      className="bg-violet-50"
       showsVerticalScrollIndicator={false}
     >
       <View className="w-full px-4" style={{ marginTop: statusBarHeight + 8 }}>

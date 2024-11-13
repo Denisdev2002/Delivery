@@ -1,27 +1,44 @@
-import { View, Pressable, Text } from "react-native";
-import { Ionicons, Feather } from '@expo/vector-icons'
+import React, { useState } from 'react';
+import { View, Text } from 'react-native';
+import { Feather } from '@expo/vector-icons';
+import Menu from './menu';
+import Notification from './notification';
+import SideMenu from './menu/sideMenu';
 
-export default function Header(){
-    return (
-        <View className=" w-full flex flex-row items-center justify-between">
-            <Pressable className="w-10 h-10 bg-white rounded-full flex justify-center 
-            items-center">
-                <Ionicons name="menu" size={20} color='#121212'/>
-            </Pressable>
+export default function Header() {
+  const [menuVisible, setMenuVisible] = useState(false);
 
-            <View className="flex flex-col items-center justify-center">
-                <Text className="text-center text-sm">Localização</Text>
+  const toggleMenu = () => setMenuVisible(!menuVisible);
 
-                <View className="flex-row items-center justify-center gap-1">
-                    <Feather name="map-pin" size={14} color="#FF0000"/>
-                    <Text className="text-lg font-blod">Campo Grande</Text>
-                </View>
-            </View>
+  return (
+    <View
+      style={{
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 16,
+      }}
+    >
+      {/* Botão de Menu */}
+      <View style={{ zIndex: 20 }}>
+        <Menu onPress={toggleMenu} />
+      </View>
 
-            <Pressable className="w-10 h-10 bg-white rounded-full flex justify-center 
-            items-center">
-                <Feather name="bell" size={20} color='#121212'/>
-            </Pressable>
+      {/* Localização - Sem deslocamento */}
+      <View style={{ alignItems: 'center', flex: 1 }}>
+        <Text style={{ textAlign: 'center', fontSize: 12 }}>Localização</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Feather name="map-pin" size={14} color="#FF0000" />
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Campo Grande</Text>
         </View>
-    )
+      </View>
+
+      {/* Notificação */}
+      <Notification />
+
+      {/* Menu Lateral - Controle de visibilidade */}
+      <SideMenu visible={menuVisible} onClose={toggleMenu} />
+    </View>
+  );
 }
